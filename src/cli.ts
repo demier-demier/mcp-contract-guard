@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { writeFile } from 'node:fs/promises';
-import { readJson, InputError } from './parse.js';
+import { InputError } from './parse.js';
+import { readJson } from './io.js';
 import { compare, createBaseline, loadBaseline, snapshot } from './core.js';
 import { html, sarif } from './report.js';
 

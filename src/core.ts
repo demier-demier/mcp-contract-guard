@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { sha256Text } from './hash.js';
 import { InputError, isObject, requireObject, LIMITS, type Json, type Obj } from './parse.js';
 
 export function canonical(value: Json): string {
@@ -6,7 +6,7 @@ export function canonical(value: Json): string {
   if (isObject(value)) return '{' + Object.keys(value).sort().map(k => JSON.stringify(k) + ':' + canonical(value[k]!)).join(',') + '}';
   return JSON.stringify(value);
 }
-export const fingerprint = (value: Json): string => createHash('sha256').update(canonical(value)).digest('hex');
+export const fingerprint = (value: Json): string => sha256Text(canonical(value));
 const ptr = (s: string) => s.replaceAll('~', '~0').replaceAll('/', '~1');
 const types = new Set(['null', 'boolean', 'object', 'array', 'number', 'integer', 'string']);
 const has = (v: Obj, k: string) => Object.hasOwn(v, k);

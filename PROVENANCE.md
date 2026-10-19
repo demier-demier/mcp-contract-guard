@@ -14,6 +14,8 @@ No source code or fixtures were copied from those references. The deliberately i
 
 ## Dependencies and generated artifacts
 
-Development dependencies are exact-version TypeScript and Node type definitions fetched from the official npm registry; the lockfile records package integrity. Runtime code uses Node standard-library APIs. The project installs no runtime packages and loads no remote assets in the report.
+Development dependencies are exact-version TypeScript, esbuild, and Node type definitions fetched from the official npm registry; the lockfile records package integrity. CLI file I/O uses Node standard-library APIs. Shared comparison code uses pinned `@noble/hashes` 2.4.0 for SHA-256 in both Node and the browser. That dependency's MIT notice is included with the browser distribution; it does not select a software license for this repository. The static recorded report loads no remote assets.
+
+The browser app is an additional original, AI-assisted implementation. It imports the existing parser, comparison engine, and SARIF formatter; findings are computed from the currently supplied exports rather than copied from recorded results. Synthetic examples are bundled as inputs. The initial synthetic baseline is the reviewed repository fixture. User-supplied references require an explicit acknowledgement within the session. No server commands, tool calls, model inference, or input-upload mechanism were added.
 
 `npm run demo` generates `fixtures/baseline.json`, `docs/results.json`, `docs/results.sarif`, and `docs/demo.html` from the two synthetic source fixtures. `npm run demo:check` regenerates their content in memory and compares it byte for byte. The screenshot is a visual rendering and is not part of that text determinism check.

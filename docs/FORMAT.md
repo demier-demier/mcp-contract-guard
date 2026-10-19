@@ -25,7 +25,7 @@ All inputs are UTF-8 JSON. The CLI accepts complete `tools/list` result objects 
 | Advisory findings | 1,000 per report | Set `advisoriesTruncated`; summary counts reflect retained findings |
 | Visible value preview | 600 canonical characters | Show truncated preview with complete value fingerprint |
 
-These limits are fixed rather than remotely configurable. CLI file reads are the supported untrusted-input boundary. Library callers should use `readJson` or `parseJson` before `snapshot`; TypeScript `Json` typing does not sanitize arbitrary in-memory objects, accessors, cycles, or custom prototypes.
+These limits are fixed rather than remotely configurable. CLI file reads and browser text/file inputs are the supported untrusted-input boundaries. They use the same pure parser and comparison engine. Library callers should use `readJson` or `parseJson` before `snapshot`; TypeScript `Json` typing does not sanitize arbitrary in-memory objects, accessors, cycles, or custom prototypes.
 
 ## Canonical fingerprints
 

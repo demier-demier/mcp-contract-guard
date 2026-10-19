@@ -1,6 +1,3 @@
-import { open } from 'node:fs/promises';
-import { constants } from 'node:fs';
-
 export type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 export type Obj = { [key: string]: Json };
 export const LIMITS = Object.freeze({ bytes: 2_097_152, depth: 32, nodes: 100_000, string: 32_768, key: 256, tools: 1_000, diffs: 2_000, advisories: 1_000 });
@@ -13,7 +10,7 @@ export function requireObject(v: Json | undefined, path: string): Obj {
 
 /** Bounded JSON reader rejects ambiguous duplicate keys before JSON.parse can erase them. */
 export function parseJson(source: string): Json {
-  if (Buffer.byteLength(source) > LIMITS.bytes) throw new InputError('Input exceeds 2 MiB');
+  if (source.length > LIMITS.bytes || new TextEncoder().encode(source).length > LIMITS.bytes) throw new InputError('Input exceeds 2 MiB');
   let pos = 0, nodes = 0;
   const fail = (message: string): never => { throw new InputError(`${message} at offset ${pos}`); };
   const ws = () => { while (/\s/.test(source[pos] ?? '') && /[ \t\r\n]/.test(source[pos] ?? '')) pos++; };
@@ -82,21 +79,4 @@ export function parseJson(source: string): Json {
     return n;
   }
   const result = value(0); ws(); if (pos !== source.length) fail('Trailing input'); return result;
-}
-
-export async function readJson(path: string): Promise<Json> {
-  // O_NONBLOCK prevents a named pipe from blocking before the regular-file check.
-  const file = await open(path, constants.O_RDONLY | constants.O_NONBLOCK);
-  try {
-    const stat = await file.stat();
-    if (!stat.isFile() || stat.size > LIMITS.bytes) throw new InputError('Input must be a regular file of at most 2 MiB');
-    // Bound the read itself, including files that grow after stat().
-    const buffer = Buffer.alloc(LIMITS.bytes + 1); let count = 0;
-    while (count < buffer.length) { const r = await file.read(buffer, count, buffer.length - count, null); if (!r.bytesRead) break; count += r.bytesRead; }
-    if (count > LIMITS.bytes) throw new InputError('Input exceeds 2 MiB');
-    let source: string;
-    try { source = new TextDecoder('utf-8', { fatal: true }).decode(buffer.subarray(0, count)); }
-    catch { throw new InputError('Input is not valid UTF-8'); }
-    return parseJson(source);
-  } finally { await file.close(); }
 }

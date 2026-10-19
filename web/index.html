@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="Compare exported MCP tool contracts directly in your browser. Inspect fingerprints, changes, evidence, and advisory signals without uploading data.">
+  <title>MCP Contract Guard · Browser comparison</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="wrap">
+    <nav><a class="brand" href="https://github.com/demier-demier/mcp-contract-guard"><span class="mark" aria-hidden="true">✓</span>MCP CONTRACT GUARD</a><span class="tag">LIVE BROWSER COMPARISON</span></nav>
+    <section class="hero"><div><p class="eyebrow">TRUST IS A REVIEWED CONTRACT</p><h1>Know what changed.<br>Review what matters.</h1><p class="lead">Compare two MCP tool exports on your device. Every contract change gets a review gate. Advisory signals show where to look first.</p></div><aside id="decision" class="decision" aria-live="polite"><span class="eyebrow">COMPARISON DECISION</span><strong id="decision-title">Preparing the demo</strong><p id="decision-detail">The synthetic example is computed by the same engine as the CLI.</p></aside></section>
+    <div class="stats" aria-label="Comparison summary"><div class="stat"><strong id="stat-changes">—</strong><span>tool contracts to review</span></div><div class="stat"><strong id="stat-heuristics">—</strong><span>advisory metadata signals</span></div><div class="stat"><strong id="stat-surface">—</strong><span>potential surface expansions</span></div><div class="stat"><strong id="stat-unchanged">—</strong><span>unchanged fingerprints</span></div></div>
+  </header>
+  <main class="wrap">
+    <section class="input-panel" aria-labelledby="input-title">
+      <div class="section-head"><div><span class="eyebrow">01 / CHOOSE YOUR EVIDENCE</span><h2 id="input-title">Two exports. One exact comparison.</h2></div><div class="preset-controls"><select id="preset" aria-label="Synthetic example"><option value="drift">Synthetic · contract drift</option><option value="unchanged">Synthetic · no change</option><option value="description">Synthetic · description only</option><option value="invalid">Synthetic · duplicate name</option></select><button id="load-preset" type="button">Load example</button></div></div>
+      <p class="input-help">Paste a complete <code>tools/list</code> response or choose a JSON file. Each side is limited to 2 MiB and 1,000 tools. File selection reads bytes locally; nothing is uploaded.</p>
+      <div class="editors">
+        <div class="editor"><div class="editor-heading"><label for="baseline">Baseline <span>REVIEW REFERENCE</span></label><label class="file-button">Choose file<input id="baseline-file" type="file" accept=".json,application/json" aria-label="Choose baseline JSON file"></label></div><textarea id="baseline" spellcheck="false" maxlength="2097153" aria-describedby="baseline-size" aria-label="Baseline tools/list JSON"></textarea><div class="editor-foot"><span id="baseline-origin">Synthetic export</span><span id="baseline-size">0 bytes</span></div></div>
+        <div class="editor"><div class="editor-heading"><label for="candidate">Candidate <span>CURRENT EXPORT</span></label><label class="file-button">Choose file<input id="candidate-file" type="file" accept=".json,application/json" aria-label="Choose candidate JSON file"></label></div><textarea id="candidate" spellcheck="false" maxlength="2097153" aria-describedby="candidate-size" aria-label="Candidate tools/list JSON"></textarea><div class="editor-foot"><span id="candidate-origin">Synthetic export</span><span id="candidate-size">0 bytes</span></div></div>
+      </div>
+      <div class="comparison-options"><label class="scope-label" for="scope">Scope label<input id="scope" value="synthetic-catalog-demo" maxlength="120" spellcheck="false"></label><div class="checks"><label><input type="checkbox" id="acknowledged">Use the left export as the reviewed reference for this run.</label><label><input type="checkbox" id="include-values">Show metadata values in the evidence and JSON download.</label></div><button class="primary" id="compare" type="button">Compare exports <span aria-hidden="true">→</span></button></div>
+      <p id="run-status" class="run-status" role="status" aria-live="polite">Computing the bundled synthetic example…</p><p id="error" class="error" role="alert" hidden></p>
+      <details class="input-notes"><summary>What does “reviewed reference” mean?</summary><p>You choose the reference for this session. The browser does not authenticate approvals or create a signed baseline. Bundled synthetic references are already reviewed examples. After editing the baseline, acknowledge the new reference. You can also load a CLI baseline file and supply its matching scope.</p><p>Redaction omits changed values. Names, scope, paths, counts, and hashes remain visible. Use synthetic exports when sharing publicly. No files or results are stored by this app; downloading is explicit.</p></details>
+    </section>
+    <section id="results" aria-labelledby="results-title" hidden>
+      <div class="section-head"><div><span class="eyebrow">02 / INSPECT THE CHANGES</span><h2 id="results-title">Tool review queue</h2><p id="result-summary" class="subtle"></p></div><div class="export-buttons"><button id="export-json" type="button" disabled>↓ Export JSON</button><button id="export-sarif" type="button" disabled>↓ Export SARIF</button></div></div>
+      <div class="digest-row"><span>BASELINE <code id="baseline-digest"></code></span><span>CANDIDATE <code id="candidate-digest"></code></span><span id="redaction-note"></span></div>
+      <div class="filters"><input type="search" id="search" aria-label="Search tool names, paths, or findings" placeholder="Search tools, evidence paths, or findings…"><select id="status" aria-label="Filter by change status"><option value="">All statuses</option><option value="changed">Changed</option><option value="added">Added</option><option value="removed">Removed</option><option value="unchanged">Unchanged</option></select><label class="check"><input type="checkbox" id="signals">Signals only</label><span id="shown" aria-live="polite"></span></div>
+      <p id="advisory-warning" class="warning" hidden>Advisory display limit reached. Counts show retained findings only; all tool fingerprints still determine the gate.</p>
+      <div id="tools"></div><p id="empty" class="empty" hidden>No tools match these filters.</p><button id="show-more" type="button" hidden>Show more tools</button>
+    </section>
+    <aside class="note"><strong>Review evidence, not a safety certificate.</strong> Annotations are untrusted hints. Text rules are fallible heuristics. Schema signals cannot prove effective permission changes. An unchanged definition does not establish safe server behavior. This app never connects to a server or executes a tool.</aside>
+    <noscript><p class="error">JavaScript is required to compare exports. The source repository also provides a CLI and a standalone recorded report.</p></noscript>
+  </main>
+  <footer class="wrap"><a href="../">← All demos</a><span>LOCAL INPUT → SHARED COMPARISON ENGINE → HUMAN REVIEW</span><a href="https://github.com/demier-demier/mcp-contract-guard">Source &amp; trust boundaries ↗</a><span>v0.1.0</span></footer>
+</body>
+</html>

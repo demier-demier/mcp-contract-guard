@@ -21,6 +21,8 @@ The protected decision is narrow: **has this exported tool contract changed sinc
 
 ## Baseline renewal
 
+The live browser demo uses the same parser and comparison core. Pasted text and chosen files remain in memory, with the same input bounds and fatal file UTF-8 decoding. It has no input API or persistent browser storage, and its CSP blocks network connections from the app. Untrusted metadata is displayed through DOM `textContent`. Input changes invalidate the current verdict. This does not protect against modified hosting assets, browser extensions, or a compromised browser. Use a trusted local checkout for sensitive reviews. A browser session acknowledgement is only a chosen review reference, not a signed approval or server identity proof.
+
 Review the complete candidate metadata and its actual source, assess the change outside the model context, and record the review through your normal approval process. Create a new baseline as an explicit separate operation. Protect it with ordinary change-review controls. Contract Guard deliberately has no `--accept-all`, auto-update, server-launch, or remote-fetch option.
 
 ## Disclosure and local handling

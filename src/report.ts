@@ -3,14 +3,7 @@ import { canonical, type Report } from './core.js';
 const esc = (s: string): string => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 const short = (s: string | undefined) => s ? s.slice(0, 14) : '—';
 
-export function sarif(report: Report): object {
-  const ruleIds = [...new Set(report.tools.flatMap(t => t.findings.map(f => f.ruleId)))].sort();
-  return { version: '2.1.0', $schema: 'https://json.schemastore.org/sarif-2.1.0.json', runs: [{
-    tool: { driver: { name: 'mcp-contract-guard', version: '0.1.0', rules: ruleIds.map(id => ({ id, shortDescription: { text: id.startsWith('META') ? 'Advisory metadata heuristic' : id === 'CONTRACT001' ? 'Tool contract changed' : 'Potential input or behavior expansion' } })) } },
-    results: report.tools.flatMap(t => t.findings.map(f => ({ ruleId: f.ruleId, level: f.kind === 'change' ? 'error' : 'warning', message: { text: `${f.tool}: ${f.message}` }, locations: [{ logicalLocations: [{ fullyQualifiedName: f.path, kind: 'member' }] }], partialFingerprints: { contractFinding: createHash('sha256').update(f.ruleId + '\n' + f.path + '\n' + report.candidateDigest).digest('hex') }, properties: { kind: f.kind, evidencePath: f.path, toolFingerprint: t.afterHash ?? t.beforeHash, scope: report.scope } }))),
-    properties: { decision: report.decision, baselineDigest: report.baselineDigest, candidateDigest: report.candidateDigest, redaction: report.redaction, advisoriesTruncated: report.advisoriesTruncated }
-  }] };
-}
+export { sarif } from './sarif.js';
 
 const script = `const search=document.getElementById('search');const select=document.getElementById('status');const signal=document.getElementById('signals');const cards=[...document.querySelectorAll('.tool')];function filter(){let count=0;for(const card of cards){const show=(!select.value||card.dataset.status===select.value)&&(!signal.checked||card.dataset.signals==='true')&&card.textContent.toLowerCase().includes(search.value.toLowerCase());card.hidden=!show;if(show)count++;}document.getElementById('shown').textContent=count+' of '+cards.length+' tools';document.getElementById('empty').hidden=count!==0;}search.addEventListener('input',filter);select.addEventListener('change',filter);signal.addEventListener('change',filter);document.getElementById('expand').addEventListener('click',()=>{const visible=cards.filter(c=>!c.hidden);const open=visible.some(c=>!c.querySelector('details').open);for(const c of visible)c.querySelector('details').open=open;document.getElementById('expand').textContent=open?'Collapse evidence':'Expand evidence';});filter();`;
 

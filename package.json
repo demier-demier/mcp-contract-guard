@@ -4,17 +4,36 @@
   "description": "Offline review gate for changes in exported MCP tool contracts",
   "type": "module",
   "private": true,
-  "engines": { "node": ">=22" },
-  "bin": { "mcp-contract-guard": "dist/cli.js" },
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "mcp-contract-guard": "dist/cli.js"
+  },
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist/", "README.md", "PROVENANCE.md", "docs/THREAT-MODEL.md", "docs/FORMAT.md", "fixtures/"],
+  "files": [
+    "dist/",
+    "README.md",
+    "PROVENANCE.md",
+    "docs/THREAT-MODEL.md",
+    "docs/FORMAT.md",
+    "fixtures/"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && node --test test/*.test.mjs",
     "demo": "npm run build && node scripts/demo.mjs",
     "demo:check": "npm run build && node scripts/demo.mjs --check",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "web:build": "tsc -p web/tsconfig.json && node scripts/build-web.mjs"
   },
-  "devDependencies": { "@types/node": "22.20.5", "typescript": "5.9.3" }
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "esbuild": "0.28.2",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@noble/hashes": "2.4.0"
+  }
 }
