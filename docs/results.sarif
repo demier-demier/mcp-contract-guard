@@ -1,0 +1,381 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "mcp-contract-guard",
+          "version": "0.1.0",
+          "rules": [
+            {
+              "id": "CONTRACT001",
+              "shortDescription": {
+                "text": "Tool contract changed"
+              }
+            },
+            {
+              "id": "META001",
+              "shortDescription": {
+                "text": "Advisory metadata heuristic"
+              }
+            },
+            {
+              "id": "SURFACE001",
+              "shortDescription": {
+                "text": "Potential input or behavior expansion"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "CONTRACT001",
+          "level": "error",
+          "message": {
+            "text": "catalog.search: Tool changed; explicit review required regardless of heuristic results."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/catalog.search",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "ebecede8eb52273da4e6ee89f4f17246307c4037656378c2a9e4b5dc3954a5ba"
+          },
+          "properties": {
+            "kind": "change",
+            "evidencePath": "/tools/catalog.search",
+            "toolFingerprint": "55ac5bcc8eb3eb11267df176c76927e1b50196845f6644d412341646bcd2b16e",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "CONTRACT001",
+          "level": "error",
+          "message": {
+            "text": "document.preview: Tool changed; explicit review required regardless of heuristic results."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/document.preview",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "62cf742a4e3f5124a777a5e21fa8e7a78ace3123f733ef0627463122e613f66c"
+          },
+          "properties": {
+            "kind": "change",
+            "evidencePath": "/tools/document.preview",
+            "toolFingerprint": "1149e518494d8021ec48e1a314ef0b535a90fa4af6679e2aff1a29e3a6881cd3",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "META001",
+          "level": "warning",
+          "message": {
+            "text": "document.preview: Instruction override language (heuristic; may be benign)."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/document.preview/description",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "de29cdf58fd00105b576dc48ee3fd4865105c3606c557ee9b8cbf67b3c371d7a"
+          },
+          "properties": {
+            "kind": "heuristic",
+            "evidencePath": "/tools/document.preview/description",
+            "toolFingerprint": "1149e518494d8021ec48e1a314ef0b535a90fa4af6679e2aff1a29e3a6881cd3",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "CONTRACT001",
+          "level": "error",
+          "message": {
+            "text": "legacy.lookup: Tool removed; explicit review required regardless of heuristic results."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/legacy.lookup",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "57759a788ec5100d1301cb101a9c2cd05ef253337a35a299dedae555edfc0ca5"
+          },
+          "properties": {
+            "kind": "change",
+            "evidencePath": "/tools/legacy.lookup",
+            "toolFingerprint": "b5772a400a2bf8c39897927ae335568ff008530ff89bc4096850ac53e0d5d310",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "CONTRACT001",
+          "level": "error",
+          "message": {
+            "text": "record.archive: Tool changed; explicit review required regardless of heuristic results."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/record.archive",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "cfb77fbf4c0437c544c942eb7c97cc742ccf1cee37c1885e70214f8747b40e35"
+          },
+          "properties": {
+            "kind": "change",
+            "evidencePath": "/tools/record.archive",
+            "toolFingerprint": "442a95003e420fa6c6ba4c4c7fe28d6ad3a55239bd550f9c06cc8ff217c4c920",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "SURFACE001",
+          "level": "warning",
+          "message": {
+            "text": "record.archive: destructiveHint changed: possible broader behavior. Annotations are untrusted hints."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/record.archive/annotations/destructiveHint",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "428bfc88f913fc360c67c65918749d696bfc018f488c4d2a32721a6d9703b672"
+          },
+          "properties": {
+            "kind": "surface",
+            "evidencePath": "/tools/record.archive/annotations/destructiveHint",
+            "toolFingerprint": "442a95003e420fa6c6ba4c4c7fe28d6ad3a55239bd550f9c06cc8ff217c4c920",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "SURFACE001",
+          "level": "warning",
+          "message": {
+            "text": "record.archive: A required field was removed at this schema node; accepted inputs may expand."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/record.archive/inputSchema/required",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "89251a8428653609719892766cc8c3a46e5d30cc5a4464be9195c6518c7f4095"
+          },
+          "properties": {
+            "kind": "surface",
+            "evidencePath": "/tools/record.archive/inputSchema/required",
+            "toolFingerprint": "442a95003e420fa6c6ba4c4c7fe28d6ad3a55239bd550f9c06cc8ff217c4c920",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "CONTRACT001",
+          "level": "error",
+          "message": {
+            "text": "record.bulk_update: Tool added; explicit review required regardless of heuristic results."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/record.bulk_update",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "85c66be6233dbc086f09ddf557480ac7e30bedd9bfc8b45dc929152f37864732"
+          },
+          "properties": {
+            "kind": "change",
+            "evidencePath": "/tools/record.bulk_update",
+            "toolFingerprint": "0b07d4ba8da03d4eb1ea1beffb8a364d9f24f3fb070aae32d8edb96d12c80f27",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "CONTRACT001",
+          "level": "error",
+          "message": {
+            "text": "report.export: Tool changed; explicit review required regardless of heuristic results."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/report.export",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "e8374e8bc2e16db4fcb47203bbee9b8426053ea02aa9880cce3ae3528c81d939"
+          },
+          "properties": {
+            "kind": "change",
+            "evidencePath": "/tools/report.export",
+            "toolFingerprint": "7bf4af22a80092c302efc04fd2bae3daabb99d7ba1003a2cd21d7c4ec4e852b5",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "SURFACE001",
+          "level": "warning",
+          "message": {
+            "text": "report.export: openWorldHint changed: possible broader behavior. Annotations are untrusted hints."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/report.export/annotations/openWorldHint",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "8dce3342d87d638f1dc43681c268474aff157ab529f55d2a08c7bc5382f8dfee"
+          },
+          "properties": {
+            "kind": "surface",
+            "evidencePath": "/tools/report.export/annotations/openWorldHint",
+            "toolFingerprint": "7bf4af22a80092c302efc04fd2bae3daabb99d7ba1003a2cd21d7c4ec4e852b5",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "SURFACE001",
+          "level": "warning",
+          "message": {
+            "text": "report.export: Additional properties are no longer explicitly forbidden at this schema node."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/report.export/inputSchema/additionalProperties",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "98338d08e06364a3c2d04c44f209d8bd756f510948447f879b2c3faf09fd2721"
+          },
+          "properties": {
+            "kind": "surface",
+            "evidencePath": "/tools/report.export/inputSchema/additionalProperties",
+            "toolFingerprint": "7bf4af22a80092c302efc04fd2bae3daabb99d7ba1003a2cd21d7c4ec4e852b5",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "SURFACE001",
+          "level": "warning",
+          "message": {
+            "text": "report.export: A parameter was added; inspect the new input surface."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/report.export/inputSchema/properties/destination",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "f8ecbb3baa2d494bf61b9929c6ba01844f00e5d615c35c17c9513f97170fcd1a"
+          },
+          "properties": {
+            "kind": "surface",
+            "evidencePath": "/tools/report.export/inputSchema/properties/destination",
+            "toolFingerprint": "7bf4af22a80092c302efc04fd2bae3daabb99d7ba1003a2cd21d7c4ec4e852b5",
+            "scope": "synthetic-catalog-demo"
+          }
+        },
+        {
+          "ruleId": "SURFACE001",
+          "level": "warning",
+          "message": {
+            "text": "report.export: An enum constraint was removed or gained values; accepted inputs may expand."
+          },
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "/tools/report.export/inputSchema/properties/format/enum",
+                  "kind": "member"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "contractFinding": "4adce754bc53b4f7f14794fe0e97be945655fbe12ae92fb2edc472183b4de2ea"
+          },
+          "properties": {
+            "kind": "surface",
+            "evidencePath": "/tools/report.export/inputSchema/properties/format/enum",
+            "toolFingerprint": "7bf4af22a80092c302efc04fd2bae3daabb99d7ba1003a2cd21d7c4ec4e852b5",
+            "scope": "synthetic-catalog-demo"
+          }
+        }
+      ],
+      "properties": {
+        "decision": "review-required",
+        "baselineDigest": "999ff7ef852a60694ad571c524a597dbeb483e557354403d3e4e36df552043b9",
+        "candidateDigest": "e4503811698cf8876ada298e9df682e5ed87275dc2e96627442fdc8747c706c5",
+        "redaction": "none",
+        "advisoriesTruncated": false
+      }
+    }
+  ]
+}
